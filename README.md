@@ -21,8 +21,8 @@ Testing the server and client
 
 ## PROGRAM:
 
-### DEVELOPED BY : PRIYAADARSHINI K
-### REGISTER NUM : 212223240126
+### DEVELOPED BY : s.pooja abirami
+### REGISTER NUM : 212223100041
 
 # SERVER:
 
