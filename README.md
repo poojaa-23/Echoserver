@@ -20,36 +20,55 @@ Implementation using Python code
 Testing the server and client 
 
 ## PROGRAM:
-Client.py
-```
+# SERVER :
+
+```python
 import socket
-HOST = "127.0.0.1"  # The server's hostname or IP address
-PORT = 65432  # The port used by the server
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.connect((HOST, PORT))
-    s.sendall(b"Hello, world")
-    data = s.recv(1024)
-print(f"Received {data!r}")
+
+client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+client_socket.connect(("127.0.0.1", 8080))
+
+message = input("Enter message: ")
+client_socket.sendall(message.encode())
+
+data = client_socket.recv(1024)
+print("Echo from server:", data.decode())
+
+client_socket.close()
 ```
 
-Server.py
-```
+# CLIENT :
+
+```python
 import socket
-HOST = "127.0.0.1"  # Standard loopback interface address (localhost)
-PORT = 65432  # Port to listen on (non-privileged ports are > 1023)
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.bind((HOST, PORT))
-    s.listen()
-    conn, addr = s.accept()
-    with conn:
-        print(f"Connected by {addr}")
-        while True:
-            data = conn.recv(1024)
-            if not data:
-                break
-            conn.sendall(data)
+
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server_socket.bind(("127.0.0.1", 8080))
+server_socket.listen(1)
+
+print("Server listening on port 8080...")
+
+conn, addr = server_socket.accept()
+print("Connected by", addr)
+
+while True:
+    data = conn.recv(1024)
+    if not data:
+        break
+    conn.sendall(data)
+
+conn.close()
+server_socket.close()
 ```
+
 ## OUTPUT:
-![alt text](<Screenshot (139).png>)
+
+<img width="814" height="195" alt="image" src="https://github.com/user-attachments/assets/7d6cddda-ce11-4e2f-8f4d-0a1b676f3e7c" />
+
+<img width="861" height="179" alt="image" src="https://github.com/user-attachments/assets/201c22c7-700d-47f8-8564-836e15e8fb2f" />
+
+
+
+
 ## RESULT:
 The program is executed successfully
